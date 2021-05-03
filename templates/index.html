@@ -1,5 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Nothing here yet!</h1>
+<form action="/" method="POST">
+    <h2>Select the CRUD operation you would like to perform:</h2>
+    {% for type in query_types %}
+        <label><input type="radio" name="query_type" value={{type}} required> {{type}}</label>
+    {% endfor %}
+    <section class="centered">
+        <button type="submit">Submit</button>
+    </section>
+</form>
 {% endblock %}

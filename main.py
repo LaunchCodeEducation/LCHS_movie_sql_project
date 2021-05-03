@@ -20,9 +20,14 @@ app.config['DEBUG'] = True
 # cursor.execute(sql_query)
 # db.close()
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-   return render_template("index.html", tab_title = "Movie SQL Project")
+    if request.method == 'POST':
+        query_type = '/' + request.form['query_type'].lower()
+        return redirect(query_type)
+
+    query_types = ['INSERT', 'SELECT', 'UPDATE', 'DELETE']
+    return render_template("index.html", tab_title = "Movie SQL Project", query_types = query_types)
 
 @app.route('/display_results')
 def display_results():
