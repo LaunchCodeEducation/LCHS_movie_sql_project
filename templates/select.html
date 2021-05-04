@@ -5,7 +5,7 @@
     <h2>Enter your query options:</h2>
     <p>SELECT
         {% for column in columns %}
-            <label><input name="{{column[0]}}" type="checkbox" name="columns" required/> {{column[0]}}</label>
+            <label><input value="{{column[0].lower()}}" type="checkbox" name="columns"/> {{column[0]}}</label>
         {% endfor %}
         
         FROM {{session['table']}} <br>
@@ -22,5 +22,5 @@
     <li>WHERE box: (Optional) Add a condition to narrow the search results.</li>
 </ul>
 <hr>
-<h1>{{sql_query}}</h1>
+<h2>{{sql_query}}</h2>
 {% endblock %}

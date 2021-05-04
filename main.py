@@ -51,39 +51,50 @@ def display_results():
 @app.route('/select', methods=['GET', 'POST'])
 def select_query():
     if request.method == 'POST':
-        columns = request.form['columns']
+        checked_columns = request.form.getlist('columns')
         table = session['table']
         condition = request.form['condition']
+        if len(checked_columns) == 0:
+            columns = '*'
+        else:
+            columns = ''
+            for column in checked_columns:
+                columns += column.lower() + ', '
+            columns = columns.strip()[:-1]
         sql_query = f"SELECT {columns} FROM {table}"
         if condition != '':
             sql_query += f" WHERE {condition}"
     else:
-        if session['table'] == 'movies':
-            columns = [['Title', 'text'], ['Year Released', 'number'], ['Director', 'text']]
-        elif session['table'] == 'directors':
-            columns = [['Last Name', 'text'], ['First Name', 'text'], ['Country', 'text']]
-        else:
-            columns = [['Last Name', 'text'], ['First Name', 'text']]
         sql_query = ''
 
+    if session['table'] == 'movies':
+        columns = [['title', 'text'], ['year_released', 'number'], ['director', 'text']]
+    elif session['table'] == 'directors':
+        columns = [['last_name', 'text'], ['first_name', 'text'], ['country', 'text']]
+    else:
+        columns = []
     return render_template("select.html", tab_title = "Movie SQL Project", sql_query = sql_query, columns = columns)
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insert_query():
     if request.method == 'POST':
-        columns = request.form['columns']
-        table = request.form['table']
-        values = request.form['values']
+        table = session['table']
+        if table == 'movies':
+            pass
+        elif table == 'directors':
+            pass
+        else:
+            pass
         sql_query = f"INSERT INTO {table} ({columns}) VALUES ({values})"
     else:
-        if session['table'] == 'movies':
-            columns = [['Title', 'text'], ['Year Released', 'number'], ['Director', 'text']]
-        elif session['table'] == 'directors':
-            columns = [['Last Name', 'text'], ['First Name', 'text'], ['Country', 'text']]
-        else:
-            columns = []
         sql_query = ''
 
+    if session['table'] == 'movies':
+        columns = [['title', 'text'], ['year_released', 'number'], ['director', 'text']]
+    elif session['table'] == 'directors':
+        columns = [['last_name', 'text'], ['first_name', 'text'], ['country', 'text']]
+    else:
+        columns = []
     return render_template("insert.html", tab_title = "Movie SQL Project", sql_query = sql_query, columns = columns)
 
 if __name__ == '__main__':
