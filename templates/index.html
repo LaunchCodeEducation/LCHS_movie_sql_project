@@ -6,6 +6,13 @@
     {% for type in query_types %}
         <label><input type="radio" name="query_type" value={{type}} required> {{type}}</label>
     {% endfor %}
+    <label>Table: 
+        <select name="table" required>
+            <option value="" disabled selected></option>
+            <option value="movies">Movies</option>
+            <option value="directors">Directors</option>
+        </select>
+    </label>
     <section class="centered">
         <button type="submit">Submit</button>
     </section>

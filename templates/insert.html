@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/insert" method="POST">
+    <h2>Enter your query options:</h2>
+    <p>INSERT INTO {{session['table']}}</p>
+    {% for column in columns %}
+        <label>{{column[0]}}: <input name="{{column[0]}}" type="{{column[1]}}"/></label>
+    {% endfor %}
+    <section class="centered">
+        <button type="submit">Submit</button>
+        <button type="reset" class="clear">Clear Form</button>
+    </section>
+</form>
+<h2>Guide:</h2>
+<ul>
+    <li>INSERT box: Choose a table name.</li>
+    <li>Columns box: Enter the column name(s) that will receive values for the new entry.</li>
+    <li>Values box: For each column you entered, provide a value to assign to it.</li>
+</ul>
+<hr>
+<h1>{{sql_query}}</h1>
+{% endblock %}

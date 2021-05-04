@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/select" method="POST">
+    <h2>Enter your query options:</h2>
+    <p>SELECT
+        {% for column in columns %}
+            <label><input name="{{column[0]}}" type="checkbox" name="columns" required/> {{column[0]}}</label>
+        {% endfor %}
+        
+        FROM {{session['table']}} <br>
+        
+        WHERE <input type="text" name="condition" placeholder="condition"/></p>
+    <section class="centered">
+        <button type="submit">Submit</button>
+        <button type="reset" class="clear">Clear Form</button>
+    </section>
+</form>
+<h2>Guide:</h2>
+<ul>
+    <li>SELECT options: Click the column names to retrieve that data from the '{{session['table']}}' table.</li>
+    <li>WHERE box: (Optional) Add a condition to narrow the search results.</li>
+</ul>
+<hr>
+<h1>{{sql_query}}</h1>
+{% endblock %}

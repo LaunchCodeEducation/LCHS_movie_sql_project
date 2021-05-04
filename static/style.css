@@ -29,6 +29,11 @@ button {
     border-radius: 20%;
 }
 
+button.clear {
+    color: black;
+    background-color: palegoldenrod;
+}
+
 .centered {
     text-align: center;
 }
