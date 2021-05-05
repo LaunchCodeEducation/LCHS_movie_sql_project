@@ -15,6 +15,8 @@
                 <li class="table-col-names">{{column[0]}}</li>
             {% endfor %}
         </ul>
+        <hr class="dashed-divider">
+        <h3>Enter your SQL query here:</h3>
         <p>DELETE FROM <span class="table-col-names">{{session['table']}}</span></p>
         <label>WHERE <input class="query-input" name="condition" type="text" placeholder="condition" required/></label>
         <section class="centered">
