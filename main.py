@@ -5,27 +5,14 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 app.secret_key = 'K>~EEAnH_x,Z{q.43;NmyQiNz1^Yr7'
 
-# db = sqlite3.connect('project.db')
-# cursor = db.cursor()
-
-# sql_query = """
-#     CREATE TABLE IF NOT EXISTS directors 
-#     (director_id INTEGER PRIMARY KEY, last_name TEXT, first_name TEXT, country TEXT)
-#     """
-# cursor.execute(sql_query)
-# sql_query = """
-#     CREATE TABLE IF NOT EXISTS movies 
-#     (movie_id INTEGER PRIMARY KEY, title TEXT, year_released INT, director INT,
-#     FOREIGN KEY (director) REFERENCES directors(director_id))
-#     """
-# cursor.execute(sql_query)
-# db.close()
-
 def execute_query(query_string):
     db = sqlite3.connect('project.db')
     cursor = db.cursor()
     if "SELECT" in query_string:
-        results = list(cursor.execute(query_string))
+        try:
+            results = list(cursor.execute(query_string))
+        except:
+            results = 'error'
     else:
         cursor.execute(query_string)
         results = "Query successfully run."
@@ -39,6 +26,10 @@ def index():
     if request.method == 'POST':
         query_type = '/' + request.form['query_type'].lower()
         session['table'] = request.form['table']
+        if session['table'] == 'movies':
+            session['columns'] = [['movie_id', 'number'], ['title', 'text'], ['year_released', 'number'], ['director', 'text']]
+        else:
+            session['columns'] = [['director_id', 'number'], ['last_name', 'text'], ['first_name', 'text'], ['country', 'text']]
         return redirect(query_type)
 
     query_types = ['INSERT', 'SELECT', 'UPDATE', 'DELETE']
@@ -51,51 +42,45 @@ def display_results():
 @app.route('/select', methods=['GET', 'POST'])
 def select_query():
     if request.method == 'POST':
-        checked_columns = request.form.getlist('columns')
+        session['checked_columns'] = request.form.getlist('columns')
         table = session['table']
         condition = request.form['condition']
-        if len(checked_columns) == 0:
+        if len(session['checked_columns']) == 0:
             columns = '*'
         else:
             columns = ''
-            for column in checked_columns:
+            for column in session['checked_columns']:
                 columns += column.lower() + ', '
             columns = columns.strip()[:-1]
         sql_query = f"SELECT {columns} FROM {table}"
         if condition != '':
             sql_query += f" WHERE {condition}"
+        results = execute_query(sql_query)
     else:
         sql_query = ''
+        results = []
 
-    if session['table'] == 'movies':
-        columns = [['title', 'text'], ['year_released', 'number'], ['director', 'text']]
-    elif session['table'] == 'directors':
-        columns = [['last_name', 'text'], ['first_name', 'text'], ['country', 'text']]
-    else:
-        columns = []
-    return render_template("select.html", tab_title = "Movie SQL Project", sql_query = sql_query, columns = columns)
+    return render_template("select.html", tab_title = "Movie SQL Project", sql_query = sql_query, results = results)
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insert_query():
     if request.method == 'POST':
         table = session['table']
-        if table == 'movies':
-            pass
-        elif table == 'directors':
-            pass
-        else:
-            pass
+        columns = ''
+        values = ''
+        for column in session['columns']:
+            value = request.form[column[0]]
+            if value != '':
+                values += value + ', '
+                columns += column[0] + ', '
+        values = values.strip()[:-1]
+        columns = columns.strip()[:-1]
         sql_query = f"INSERT INTO {table} ({columns}) VALUES ({values})"
+        # execute_query(sql_query)
     else:
         sql_query = ''
 
-    if session['table'] == 'movies':
-        columns = [['title', 'text'], ['year_released', 'number'], ['director', 'text']]
-    elif session['table'] == 'directors':
-        columns = [['last_name', 'text'], ['first_name', 'text'], ['country', 'text']]
-    else:
-        columns = []
-    return render_template("insert.html", tab_title = "Movie SQL Project", sql_query = sql_query, columns = columns)
+    return render_template("insert.html", tab_title = "Movie SQL Project", sql_query = sql_query)
 
 if __name__ == '__main__':
     app.run()

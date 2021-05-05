@@ -4,7 +4,7 @@ h1 {
     margin: 5px;
 }
 
-h2 {
+h2, h3 {
     text-align: center;
     margin: 10px;
 }
@@ -22,6 +22,9 @@ label {
     margin: 10px;
 }
 
+a {
+    font-size: larger;
+}
 button {
     color: white;
     background-color: blue;
@@ -36,4 +39,14 @@ button.clear {
 
 .centered {
     text-align: center;
+}
+.error {
+    color: red;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+    margin: 5px;
 }

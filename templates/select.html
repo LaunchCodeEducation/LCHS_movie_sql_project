@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<section class="centered">
+    <a href="/">Return to Main Menu</a><br>
+</section>
 <form action="/select" method="POST">
     <h2>Enter your query options:</h2>
     <p>SELECT
-        {% for column in columns %}
+        {% for column in session['columns'] %}
             <label><input value="{{column[0].lower()}}" type="checkbox" name="columns"/> {{column[0]}}</label>
         {% endfor %}
         
@@ -22,5 +25,31 @@
     <li>WHERE box: (Optional) Add a condition to narrow the search results.</li>
 </ul>
 <hr>
-<h2>{{sql_query}}</h2>
+{% if results %}
+    <h2>{{sql_query}}</h2>
+    {% if results != "error" %}
+        <table>
+            <tr>
+                {% if session['checked_columns'] %}
+                    {% for column in session['checked_columns'] %}
+                        <th class="centered">{{column}}</th>
+                    {% endfor %}
+                {% else %}
+                    {% for column in session['columns'] %}
+                        <th class="centered">{{column[0]}}</th>
+                    {% endfor %}
+                {% endif %}
+            </tr>
+            {% for row in results %}
+                <tr>
+                    {% for entry in row %}
+                        <td>{{entry}}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+    <h3 class="error">Sorry, there was a syntax error in your query.</h3>
+    {% endif %}
+{% endif %}
 {% endblock %}

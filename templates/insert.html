@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 
 {% block content %}
+<section class="centered">
+    <a href="/">Return to Main Menu</a><br>
+</section>
 <form action="/insert" method="POST">
     <h2>Enter your query options:</h2>
     <p>INSERT INTO {{session['table']}}</p>
-    {% for column in columns %}
+    {% for column in session['columns'] %}
         <label>{{column[0]}}: <input name="{{column[0]}}" type="{{column[1]}}"/></label>
     {% endfor %}
     <section class="centered">
@@ -18,5 +21,5 @@
     <li>It is OK to leave a box blank.</li>
 </ul>
 <hr>
-<h1>{{sql_query}}</h1>
+<h2>{{sql_query}}</h2>
 {% endblock %}
