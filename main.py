@@ -8,16 +8,18 @@ app.secret_key = 'K>~EEAnH_x,Z{q.43;NmyQiNz1^Yr7'
 def execute_query(query_string):
     db = sqlite3.connect('project.db')
     cursor = db.cursor()
-    if "SELECT" in query_string:
+    if "select" in query_string.lower():
         try:
             results = list(cursor.execute(query_string))
         except:
             results = 'error'
     else:
-        cursor.execute(query_string)
-        results = "Query successfully run."
-    if "SELECT" not in query_string:
-        db.commit()
+        try:
+            cursor.execute(query_string)
+            db.commit()
+            results = "Query successfully run."
+        except:
+            results = 'error'
     db.close()
     return results
 
@@ -29,7 +31,7 @@ def index():
         if session['table'] == 'movies':
             session['columns'] = [['movie_id', 'number'], ['title', 'text'], ['year_released', 'number'], ['director', 'text']]
         else:
-            session['columns'] = [['director_id', 'number'], ['last_name', 'text'], ['first_name', 'text'], ['country', 'text']]
+            session['columns'] = [['director_id', 'number'], ['last_name', 'text'], ['first_name', 'text']]
         return redirect(query_type)
 
     query_types = ['INSERT', 'SELECT', 'UPDATE', 'DELETE']
@@ -42,16 +44,17 @@ def display_results():
 @app.route('/select', methods=['GET', 'POST'])
 def select_query():
     if request.method == 'POST':
-        session['checked_columns'] = request.form.getlist('columns')
         table = session['table']
+        columns = request.form['columns']
         condition = request.form['condition']
-        if len(session['checked_columns']) == 0:
+        if len(columns) == 0 or '*' in columns:
             columns = '*'
+            if table == 'movies':
+                session['selected_columns'] = ['movie_id', 'title', 'year_released', 'director']
+            else:
+                session['selected_columns'] = ['director_id', 'last_name', 'first_name']
         else:
-            columns = ''
-            for column in session['checked_columns']:
-                columns += column.lower() + ', '
-            columns = columns.strip()[:-1]
+            session['selected_columns'] = columns.split(',')
         sql_query = f"SELECT {columns} FROM {table}"
         if condition != '':
             sql_query += f" WHERE {condition}"
@@ -66,21 +69,21 @@ def select_query():
 def insert_query():
     if request.method == 'POST':
         table = session['table']
-        columns = ''
-        values = ''
-        for column in session['columns']:
-            value = request.form[column[0]]
-            if value != '':
-                values += value + ', '
-                columns += column[0] + ', '
-        values = values.strip()[:-1]
-        columns = columns.strip()[:-1]
+        columns = request.form['columns']
+        values = request.form['values']
+        to_enter = values.split(',')
+        for index in range(len(to_enter)):
+            to_enter[index] = to_enter[index].strip()
+            if to_enter[index].isdigit():
+                to_enter[index] = int(to_enter[index])
+
         sql_query = f"INSERT INTO {table} ({columns}) VALUES ({values})"
-        # execute_query(sql_query)
+        results = execute_query(sql_query)
     else:
         sql_query = ''
+        results = []
 
-    return render_template("insert.html", tab_title = "Movie SQL Project", sql_query = sql_query)
+    return render_template("insert.html", tab_title = "Movie SQL Project", sql_query = sql_query, results = results)
 
 if __name__ == '__main__':
     app.run()

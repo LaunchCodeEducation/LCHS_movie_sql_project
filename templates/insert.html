@@ -5,21 +5,35 @@
     <a href="/">Return to Main Menu</a><br>
 </section>
 <form action="/insert" method="POST">
-    <h2>Enter your query options:</h2>
-    <p>INSERT INTO {{session['table']}}</p>
-    {% for column in session['columns'] %}
-        <label>{{column[0]}}: <input name="{{column[0]}}" type="{{column[1]}}"/></label>
-    {% endfor %}
+    <h2>The INSERT query syntax:</h2>
+    <p class="sample-syntax">
+        INSERT INTO {{session['table']}}
+        (<em>column_name_1, column_name_2, ...</em>)
+        VALUES (<em>value_1, value_2, ...</em>)
+    </p>
+    <ul>Column names for the <span class="table-col-names">{{session['table']}}</span> table:
+        {% for column in session['columns'] %}
+            <li class="table-col-names">{{column[0]}}</li>
+        {% endfor %}
+    </ul>
+    <!-- <label for="query_label">Enter your SQL query here:</label>
+    <input id="query_label" class="query-input" name="sql_query" type="text" /> -->
+    <label>INSERT INTO <span class="table-col-names">{{session['table']}}</span><br>
+        (<input class="query-input" name="columns" type="text" placeholder="column_name_1, column_name_2, ..." required/>)
+    </label>
+    <label>VALUES<br>
+        (<input class="query-input" name="values" type="text" placeholder="value_1, value_2, ..." required/>)
+    </label>
     <section class="centered">
         <button type="submit">Submit</button>
         <button type="reset" class="clear">Clear Form</button>
     </section>
 </form>
-<h2>Guide:</h2>
-<ul>
-    <li>Enter a value for each column you would like to fill.</li>
-    <li>It is OK to leave a box blank.</li>
-</ul>
 <hr>
 <h2>{{sql_query}}</h2>
+{% if results == 'error' %}
+    <h3 class="error">Sorry, there was a syntax error in your query.</h3>
+{% elif results %}
+    <h3>{{results}}</h3>
+{% endif %}
 {% endblock %}
