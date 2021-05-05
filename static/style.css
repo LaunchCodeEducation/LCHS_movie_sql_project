@@ -9,6 +9,10 @@ h2, h3 {
     margin: 10px;
 }
 
+h4 {
+    color: brown;
+}
+
 form {
     display: inline-block;
     border: 1px solid black;
@@ -17,6 +21,7 @@ form {
     padding: 10px;
     font-size: 14pt;
     text-align: left;
+    min-width: 40%;
 }
 
 label {
@@ -48,6 +53,7 @@ button {
     background-color: blue;
     font-size: larger;
     border-radius: 20%;
+    margin: 5px;
 }
 
 button.clear {
