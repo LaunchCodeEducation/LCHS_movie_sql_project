@@ -21,16 +21,20 @@ form {
 
 label {
     display: block;
-    margin: 10px;
+    margin: 5px;
 }
 
-p {
-    margin: 10px;
+option {
+    font-size: large;
+}
+
+p, li {
+    margin: 5px;
 }
 
 .query-input {
     width: 80%;
-    margin: 10px;
+    margin: 5px;
     padding: 5px;
     font-size: larger;
 }
@@ -38,6 +42,7 @@ p {
 a {
     font-size: larger;
 }
+
 button {
     color: white;
     background-color: blue;
@@ -79,4 +84,8 @@ table, th, td {
     border-collapse: collapse;
     padding: 10px;
     margin: 5px;
+}
+
+.dashed-divider {
+    border: dashed gray 1px;
 }

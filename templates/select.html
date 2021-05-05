@@ -27,25 +27,23 @@
     </section>
 </form>
 <hr>
-{% if results %}
-    <h2>{{sql_query}}</h2>
-    {% if results != "error" %}
-        <table>
+<h2>{{sql_query}}</h2>
+{% if results == 'error' %}
+    <h3 class="{{results}}">Sorry, there was a syntax error in your query.</h3>
+{% elif results %}
+    <table>
+        <tr>
+            {% for column in session['selected_columns'] %}
+                <th class="centered">{{column.strip()}}</th>
+            {% endfor %}
+        </tr>
+        {% for row in results %}
             <tr>
-                {% for column in session['selected_columns'] %}
-                    <th class="centered">{{column.strip()}}</th>
+                {% for entry in row %}
+                    <td>{{entry}}</td>
                 {% endfor %}
             </tr>
-            {% for row in results %}
-                <tr>
-                    {% for entry in row %}
-                        <td>{{entry}}</td>
-                    {% endfor %}
-                </tr>
-            {% endfor %}
-        </table>
-    {% else %}
-        <h3 class="error">Sorry, there was a syntax error in your query.</h3>
-    {% endif %}
+        {% endfor %}
+    </table>
 {% endif %}
 {% endblock %}

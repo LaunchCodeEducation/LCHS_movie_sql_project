@@ -17,7 +17,7 @@ def execute_query(query_string):
         try:
             cursor.execute(query_string)
             db.commit()
-            results = "Query successfully run."
+            results = "success"
         except:
             results = 'error'
     db.close()
@@ -80,6 +80,22 @@ def insert_query():
         results = []
 
     return render_template("insert.html", tab_title = "Movie SQL Project", sql_query = sql_query, results = results)
+
+@app.route('/update', methods=['GET', 'POST'])
+def update_query():
+    if request.method == 'POST':
+        table = session['table']
+        new_value = request.form['new_value']
+        condition = request.form['condition']
+        sql_query = f"UPDATE {table} SET {new_value}"
+        if condition != '':
+            sql_query += f" WHERE {condition}"
+        results = execute_query(sql_query)
+    else:
+        sql_query = ''
+        results = []
+
+    return render_template("update.html", tab_title = "Movie SQL Project", sql_query = sql_query, results = results)
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete_query():

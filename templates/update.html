@@ -5,18 +5,21 @@
     <a href="/">Return to Main Menu</a><br>
 </section>
 <section class='centered'>
-    <form action="/delete" method="POST">
-        <h2>The DELETE query syntax:</h2>
+    <form action="/update" method="POST">
+        <h2>The UPDATE query syntax:</h2>
         <p class="sample-syntax">
-            DELETE FROM {{session['table']}} WHERE <em>condition</em>
+            UPDATE {{session['table']}} SET <em>column_name = new_value</em>WHERE <em>condition</em>
         </p>
         <ul>Column names for the <span class="table-col-names">{{session['table']}}</span> table:
             {% for column in session['columns'] %}
                 <li class="table-col-names">{{column[0]}}</li>
             {% endfor %}
         </ul>
-        <p>DELETE FROM <span class="table-col-names">{{session['table']}}</span></p>
-        <label>WHERE <input class="query-input" name="condition" type="text" placeholder="condition" required/></label>
+        <hr class="dashed-divider">
+        <h3>Enter your SQL query here:</h3>
+        <p>UPDATE <span class="table-col-names">{{session['table']}}</span></p>
+        <label>SET <input class="query-input" name="new_value" type="text" placeholder="column_name = new_value" required/></label>
+        <label>WHERE <input class="query-input" name="condition" type="text" placeholder="condition"/></label>
         <section class="centered">
             <button type="submit">Submit</button>
             <button type="reset" class="clear">Clear Form</button>

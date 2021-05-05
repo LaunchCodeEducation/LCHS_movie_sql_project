@@ -30,8 +30,8 @@
 <hr>
 <h2>{{sql_query}}</h2>
 {% if results == 'error' %}
-    <h3 class="error">Sorry, there was a syntax error in your query.</h3>
+    <h3 class="{{results}}">Sorry, there was a syntax error in your query.</h3>
 {% elif results %}
-    <h3 class="success">{{results}}</h3>
+    <h3 class="{{results}}">Query successfully run.</h3>
 {% endif %}
 {% endblock %}
