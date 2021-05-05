@@ -37,10 +37,6 @@ def index():
     query_types = ['INSERT', 'SELECT', 'UPDATE', 'DELETE']
     return render_template("index.html", tab_title = "Movie SQL Project", query_types = query_types)
 
-@app.route('/display_results')
-def display_results():
-   return render_template("display_results.html", tab_title = "SELECT Results")
-
 @app.route('/select', methods=['GET', 'POST'])
 def select_query():
     if request.method == 'POST':
@@ -84,6 +80,19 @@ def insert_query():
         results = []
 
     return render_template("insert.html", tab_title = "Movie SQL Project", sql_query = sql_query, results = results)
+
+@app.route('/delete', methods=['GET', 'POST'])
+def delete_query():
+    if request.method == 'POST':
+        table = session['table']
+        condition = request.form['condition']
+        sql_query = f"DELETE FROM {table} WHERE {condition}"
+        results = execute_query(sql_query)
+    else:
+        sql_query = ''
+        results = []
+
+    return render_template("delete.html", tab_title = "Movie SQL Project", sql_query = sql_query, results = results)
 
 if __name__ == '__main__':
     app.run()

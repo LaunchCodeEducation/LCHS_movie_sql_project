@@ -16,6 +16,7 @@ form {
     margin: 10px;
     padding: 10px;
     font-size: 14pt;
+    text-align: left;
 }
 
 label {
@@ -52,14 +53,20 @@ button.clear {
 .centered {
     text-align: center;
 }
+
 .error {
     color: red;
+}
+
+.success {
+    color: purple;
 }
 
 .sample-syntax {
     color: blue;
     font-size: larger;
     margin: 5px;
+    text-align: center;
 }
 
 .table-col-names {

@@ -16,8 +16,6 @@
             <li class="table-col-names">{{column[0]}}</li>
         {% endfor %}
     </ul>
-    <!-- <label for="query_label">Enter your SQL query here:</label>
-    <input id="query_label" class="query-input" name="sql_query" type="text" /> -->
     <label>INSERT INTO <span class="table-col-names">{{session['table']}}</span><br>
         (<input class="query-input" name="columns" type="text" placeholder="column_name_1, column_name_2, ..." required/>)
     </label>
@@ -34,6 +32,6 @@
 {% if results == 'error' %}
     <h3 class="error">Sorry, there was a syntax error in your query.</h3>
 {% elif results %}
-    <h3>{{results}}</h3>
+    <h3 class="success">{{results}}</h3>
 {% endif %}
 {% endblock %}
