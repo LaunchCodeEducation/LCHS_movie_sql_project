@@ -32,6 +32,7 @@
 {% if results == 'error' %}
     <h3 class="{{results}}">Sorry, there was a syntax error in your query.</h3>
 {% elif results %}
+<section class="centered">
     <table>
         <tr>
             {% for column in session['selected_columns'] %}
@@ -46,5 +47,6 @@
             </tr>
         {% endfor %}
     </table>
+</section>
 {% endif %}
 {% endblock %}

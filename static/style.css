@@ -84,6 +84,11 @@ table, th, td {
     border-collapse: collapse;
     padding: 10px;
     margin: 5px;
+    text-align: left;
+}
+
+table {
+    display: inline-table;
 }
 
 .dashed-divider {
