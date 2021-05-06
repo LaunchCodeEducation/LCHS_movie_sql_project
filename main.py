@@ -8,14 +8,23 @@ app.secret_key = 'K>~EEAnH_x,Z{q.43;NmyQiNz1^Yr7'
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        query_type = '/' + request.form['query_type'].lower()
+        # Collect the table choice from the form. Store it in a session cookie.
         session['table'] = request.form['table']
+
+        # Based on the table choice, assign the column names to the session.
+        # These will be displayed on each of the other the web forms.
         if session['table'] == 'movies':
             session['columns'] = ['movie_id', 'title', 'year_released', 'director']
         else:
             session['columns'] = ['director_id', 'last_name', 'first_name']
+
+        # Request the chosen SQL option from the form, and use it to build the query_type string.
+        query_type = '/' + request.form['query_type'].lower()
+
+        # Use the query_type string to redirect control to the proper function.
         return redirect(query_type)
     else:
+        # The query_types list is used to create the labels for the form on the home page.
         query_types = ['INSERT', 'SELECT', 'UPDATE', 'DELETE']
     return render_template("index.html", tab_title = "Movie SQL Project", query_types = query_types, home=True)
 
