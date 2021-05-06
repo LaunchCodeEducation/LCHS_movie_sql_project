@@ -1,3 +1,7 @@
 {
-    "python.pythonPath": "movie-env/bin/python"
+    "python.pythonPath": "movie-env/bin/python",
+    "cSpell.ignoreWords": [
+        "sqls",
+        "venv"
+    ]
 }
