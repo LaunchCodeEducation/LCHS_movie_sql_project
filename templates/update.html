@@ -5,7 +5,7 @@
     <form action="/update" method="POST">
         <h2>The UPDATE query syntax:</h2>
         <p class="sample-syntax">
-            UPDATE {{session['table']}} SET <em>column_name = new_value</em> WHERE <em>condition</em>
+            UPDATE {{session['table']}} SET <em>column_name = new_value</em>WHERE <em>condition</em>
         </p>
         <ul>Column names for the <span class="table-col-names">{{session['table']}}</span> table:
             {% for column in session['columns'] %}
@@ -15,8 +15,8 @@
         <hr class="dashed-divider">
         <h3>Enter your SQL query here:</h3>
         <p>UPDATE <span class="table-col-names">{{session['table']}}</span></p>
-        <h4>Add a SET input here...</h4>
-        <h4>Add a WHERE input here...</h4>
+        <label>SET <input class="query-input" name="set_value" type="text" placeholder="column_name = new_value" required/></label>
+        <label>WHERE <input class="query-input" name="condition" type="text" placeholder="condition"/></label>
         <section class="centered">
             <button type="submit">Submit</button>
             <button type="reset" class="clear">Clear</button>
