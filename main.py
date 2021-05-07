@@ -26,23 +26,23 @@ def index():
     else:
         # The query_types list is used to create the labels for the form on the home page.
         query_types = ['INSERT', 'SELECT', 'UPDATE', 'DELETE']
-    return render_template("index.html", tab_title = "Movie SQL Project", query_types = query_types, home=True)
+    return render_template("index.html", tab_title = "Movie SQL Project", query_types = query_types, home = True)
 
 @app.route('/insert', methods=['GET', 'POST'])
 def insert_query():
-    return render_template("insert.html", tab_title = "INSERT query", home=False)
+    return render_template("insert.html", tab_title = "INSERT query", home = False)
 
 @app.route('/select', methods=['GET', 'POST'])
 def select_query():
-    return render_template("select.html", tab_title = "SELECT query", home=False)
+    return render_template("select.html", tab_title = "SELECT query", home = False)
 
 @app.route('/update', methods=['GET', 'POST'])
 def update_query():
-    return render_template("update.html", tab_title = "UPDATE query", home=False)
+    return render_template("update.html", tab_title = "UPDATE query", home = False)
 
 @app.route('/delete', methods=['GET', 'POST'])
 def delete_query():
-    return render_template("delete.html", tab_title = "DELETE query", home=False)
+    return render_template("delete.html", tab_title = "DELETE query", home = False)
 
 if __name__ == '__main__':
     app.run()
