@@ -13,7 +13,35 @@
                 <a href="/">Return to Main Menu</a><br>
             </section>
         {% endif %}
+
         {% block content %}
         {% endblock %}
+
+        {% if not home %}
+            {% if results is not string %} <!-- Display a table of the SELECT query results. -->
+                <section class="centered">
+                    <table>
+                        <tr>
+                            {% for column in session['selected_columns'] %}
+                                <th class="centered">{{column.strip()}}</th>
+                            {% endfor %}
+                        </tr>
+                        {% for row in results %}
+                            <tr>
+                                {% for entry in row %}
+                                    <td>{{entry}}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </section>
+                
+            <!-- Display simple feedback for all other SQL queries. -->
+            {% elif results.lower() == 'error' %}
+                <h3 class="{{results}}">Sorry, there was a syntax error in your query.</h3>
+            {% elif results.lower() == 'success' %}
+                <h3 class="{{results}}">Query successfully executed!</h3>
+            {% endif %}
+        {% endif %}
     </body>
 </html>
