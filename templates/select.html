@@ -13,6 +13,8 @@
                 <li class="table-col-names">{{column}}</li>
             {% endfor %}
         </ul>
+        <hr class="dashed-divider">
+        <h3>Enter your SQL query here:</h3>
         <label>SELECT <input class="query-input" name="columns" type="text" placeholder="column_name_1, column_name_2, ..." required/></label>
         <p>FROM <span class="table-col-names">{{session['table']}}</span></p>
         <label>WHERE <input class="query-input" name="condition" type="text" placeholder="condition"/></label>

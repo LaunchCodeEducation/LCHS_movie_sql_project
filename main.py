@@ -26,6 +26,10 @@ def index():
     else:
         # The query_types list is used to create the labels for the form on the home page.
         query_types = ['INSERT', 'SELECT', 'UPDATE', 'DELETE']
+        
+        # Remove old data from the session cookie.
+        session.clear()
+
     return render_template("index.html", tab_title = "Movie SQL Project", query_types = query_types, home = True)
 
 @app.route('/insert', methods=['GET', 'POST'])

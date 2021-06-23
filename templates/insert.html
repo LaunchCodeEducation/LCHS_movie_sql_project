@@ -14,6 +14,8 @@
                 <li class="table-col-names">{{column}}</li>
             {% endfor %}
         </ul>
+        <hr class="dashed-divider">
+        <h3>Enter your SQL query here:</h3>
         <label>INSERT INTO <span class="table-col-names">{{session['table']}}</span><br>
             (<input class="query-input" name="columns" type="text" placeholder="column_name_1, column_name_2, ..." required/>)
         </label>
