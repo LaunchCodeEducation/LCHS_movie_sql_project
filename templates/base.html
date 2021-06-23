@@ -8,7 +8,7 @@
     </head>
     <body>
         <h1>LCHS Movie SQLs Project</h1>
-        {% if not home %}
+        {% if not home %}               <!-- If not the home screen, add a link to return to the index.html page. -->
             <section class="centered">
                 <a href="/">Return to Main Menu</a><br>
             </section>
@@ -17,7 +17,7 @@
         {% block content %}
         {% endblock %}
 
-        {% if not home %}
+        {% if not home %}   <!-- Each render_template() function sets 'home' to be True or False. -->
             {% if results is not string %} <!-- Display a table of the SELECT query results. -->
                 <section class="centered">
                     <table>
