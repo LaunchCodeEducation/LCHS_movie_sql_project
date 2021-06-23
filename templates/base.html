@@ -21,7 +21,9 @@
             {% if results is not string %} <!-- Display a table of the SELECT query results. -->
                 <section class="centered">
                     <table>
-                        <tr>
+                        <tr>    <!-- 'tr' indicates a table row. 'th' is a heading cell. -->
+                            
+                            <!-- The 'selected_columns' key points to a list of column names. -->
                             {% for column in session['selected_columns'] %}
                                 <th class="centered">{{column.strip()}}</th>
                             {% endfor %}
